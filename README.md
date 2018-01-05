@@ -13,7 +13,7 @@ FillAndExportOperation reportGenerator =
         new FillAndExportTemplate(fillerFactory, exporterFactory));
 
 // Use
-Map&lt;String, Object&gt; parameters = ...;
+Map<String, Object> parameters = ...;
 JasperReport jasperReport = ...; // uses SQL query
 OutputStream out = ...;
 try {
@@ -63,7 +63,7 @@ class ... {
     private JasperReport jasperReport;
     ...
     public ...() throws JRException {
-        Map&lt;String, Object&gt; parameters = ...;
+        Map<String, Object> parameters = ...;
         OutputStream out = ...;
         try {
             reportGenerator.fillAndExportReport(
@@ -135,4 +135,4 @@ This project contains some classes to help test reports with bigger amounts of d
 	- Usually used with:
 		- `TimeLimitedDataSource`
 		- `CountLimitedDataSource`
-- [RepeatFirstBeanDataSourceProxy]((https://github.com/orangeandbronze/jasperreports-utils/blob/master/src/main/java/com/orangeandbronze/jdbc/RepeatFirstBeanDataSourceProxy.java)) (proxies a `java.sql.DataSource`) - This can be used outside of JasperReports, since it only relies on JDBC.
+- [RepeatFirstBeanDataSourceProxy](https://github.com/orangeandbronze/jasperreports-utils/blob/master/src/main/java/com/orangeandbronze/jdbc/RepeatFirstBeanDataSourceProxy.java) (proxies a `java.sql.DataSource`) - This can be used outside of JasperReports, since it only relies on JDBC.
