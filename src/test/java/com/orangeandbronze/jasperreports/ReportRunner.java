@@ -84,8 +84,11 @@ public class ReportRunner {
 			fillAndExportOperation.fillAndExportReport(
 					report, parameters, reportFillerCallback, output);
 		} catch (Exception e) {
-			logger.debug("Exception encountered: {}", e.getMessage());
-			logger.trace("", e);
+			if (logger.isTraceEnabled()) {
+				logger.trace("Exception encountered", e);
+			} else if (logger.isDebugEnabled()) {
+				logger.debug("Exception encountered: {}", e.getMessage());
+			}
 			getExceptions().add(e);
 			throw e;
 		} finally {
