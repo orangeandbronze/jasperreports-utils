@@ -118,7 +118,13 @@ public class RepeatFirstRowDataSourceProxy implements DataSource {
 			try {
 				Object returnValue = method.invoke(targetConnection, args);
 				if (Statement.class.isAssignableFrom(method.getReturnType())) {
-					logger.debug("Proxying Statement returned from [{}]", method.getName());
+					if (logger.isTraceEnabled()) {
+						logger.debug("Proxying [{}] returned from [{}]",
+								method.getReturnType(), method);
+					} else if (logger.isDebugEnabled()) {
+						logger.debug("Proxying [{}] returned from [{}]",
+								method.getReturnType().getSimpleName(), method.getName());
+					}
 					Statement targetStatement = (Statement) returnValue;
 					returnValue = Proxy.newProxyInstance(
 							ConnectionInvocationHandler.class.getClassLoader(),
@@ -149,7 +155,11 @@ public class RepeatFirstRowDataSourceProxy implements DataSource {
 			try {
 				Object returnValue = method.invoke(targetStatement, args);
 				if ("executeQuery".equals(method.getName())) {
-					logger.debug("Proxying ResultSet returned from [{}]", method.getName());
+					if (logger.isTraceEnabled()) {
+						logger.debug("Proxying [ResultSet] returned from [{}]", method);
+					} else if (logger.isDebugEnabled()) {
+						logger.debug("Proxying [ResultSet] returned from [{}]", method.getName());
+					}
 					ResultSet targetResultSet = (ResultSet) returnValue;
 					InvocationHandler handler =
 							new RepeatFirstRowResultSetInvocationHandler(targetResultSet);
@@ -199,7 +209,7 @@ public class RepeatFirstRowDataSourceProxy implements DataSource {
 					firstCallMade = true;
 				}
 			}
-			logger.trace("Invoking underlying method [{}]", method.getName());
+			logger.trace("Invoking underlying method [{}]", method);
 			try {
 				return method.invoke(targetResultSet, args);
 			} catch (InvocationTargetException e) {
